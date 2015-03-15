@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    div
+
+
+    form(method="post" action="/postQuery")
+        input(type="text" ng-model="textSearch" )
+        select(ng-model="type")
+            option(value="" style="display:none") select type
+            option(ng-repeat="type in types" value="{{type}}") {{type}}
+        label Price
+        input(ng-model="price" type="number")
+        label Rating
+        input(ng-model="rating" type="number")
+        input(type="button" ng-click="formSubmit()" value="submit")
+    div
+        ul
+            li(ng-repeat="item in result")
+                ul
+                    li(ng-repeat="prop in item") {{prop}}
+                    hr
