@@ -1,10 +1,13 @@
 doctype html
 html(ng-app="app")
   head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     title= "AmazaonScraper data UI"
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='/css/style.css')
     script(src="/js/angular.min.js")
-    script(src="/js/angular-resource.min.js")
     script(src="/js/app.js")
   body(ng-controller="MainController as MainCtrl")
     block content

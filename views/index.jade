@@ -1,22 +1,80 @@
 extends layout
 
 block content
-    div
+    #container
+        .row
+            form(method="post" action="/postQuery" class="col-md-6 ")
+                .form-group
+                    label Title:
+                    input(type="text" ng-model="textSearch" )
+                .form-group
+                    label Type:
+                    select(ng-model="type")
+                        option(value="" style="display:none") select type
+                        option(ng-repeat="type in types " value="{{type}}") {{type}}
+                .form-group
+                    label Price:
+                    select(ng-model="priceOperand" )
+                        option(value="" style="display:none") select operand
+                        option(value="=" ) =
+                        option(value=">") >
+                        option(value="<") <
+                        option(value="<=") <=
+                        option(value=">=") >=
+                        option(value="between") between
 
-
-    form(method="post" action="/postQuery")
-        input(type="text" ng-model="textSearch" )
-        select(ng-model="type")
-            option(value="" style="display:none") select type
-            option(ng-repeat="type in types" value="{{type}}") {{type}}
-        label Price
-        input(ng-model="price" type="number")
-        label Rating
-        input(ng-model="rating" type="number")
-        input(type="button" ng-click="formSubmit()" value="submit")
-    div
-        ul
-            li(ng-repeat="item in result")
-                ul
-                    li(ng-repeat="prop in item") {{prop}}
-                    hr
+                    input(ng-model="price" type="number")
+                    input(ng-model="$parent.priceSecond" ng-if="priceOperand=='between' " type="number")
+                .form-group
+                    label Rating:
+                    select(ng-model="ratingOperand")
+                        option(value="" style="display:none") select operand
+                        option(value="=" ) =
+                        option(value=">") >
+                        option(value="<") <
+                        option(value="<=") <=
+                        option(value=">=") >=
+                        option(value="between") between
+                    input(ng-model="rating" type="number")
+                    input(ng-model="$parent.ratingSecond" ng-if="ratingOperand=='between'"  type="number")
+                .form-group
+                    select(ng-model="sortBy")
+                        option(value="" style="display:none") Sort By
+                        option(value="price") price
+                        option(value="rating") rating
+                    select(ng-model="$parent.sortOrder" ng-if="sortBy")
+                        option(value="1") Ascending
+                        option(value="-1") Descending
+                input(type="button" ng-click="formSubmit()" class="btn btn-success" value="submit")
+                hr
+        .row
+            br
+            ul
+                li(ng-repeat="item in result")
+                    ul
+                        li
+                            strong Title:
+                            |{{item.title}}
+                        li
+                            strong Price:
+                            |{{item.price}} $
+                        li
+                            strong Rating:
+                            |{{item.rating}}
+                        li
+                            strong Type:
+                            |{{item.type}}
+                        li
+                            strong Availability:
+                            |{{item.availability}}
+                        li
+                            strong Description:
+                            |{{item.description}}
+                        li
+                            strong Feture bullets:
+                            |{{item.feature_bullets}}
+                        li
+                            strong Product details:
+                            ul
+                                li(ng-repeat="detail in item.productDetails") {{detail}}
+                        hr
